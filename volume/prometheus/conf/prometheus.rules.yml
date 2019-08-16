@@ -1,0 +1,37 @@
+groups:
+- name: node
+  rules:
+  - alert: InstanceDown
+    expr: up == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Instance {{ $labels.instance }} down" 
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes."
+  - alert: WindowsDiskFreeSpace
+    expr: 100 * wmi_logical_disk_free_bytes{volume!~"HarddiskVolume.*"}/wmi_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 10
+    for: 1m
+    labels:
+      severity: warning 
+    annotations:
+      summary: "Windows 服务器 {{ $labels.instance }} 的 {{ $labels.volume }} 盘空间还剩 {{ $value }}%" 
+      description: "Windows 服务器 {{ $labels.instance }} 的 {{ $labels.volume }} 盘空间还剩 {{ $value }}%"
+- name: database
+  rules:
+  - alert: OracleDataTablespace
+    expr: 100 * oracledb_tablespace_free{tablespace=~"SZGD_.+",type="PERMANENT"}/oracledb_tablespace_max_bytes{tablespace=~"SZGD_.+",type="PERMANENT"} < 10
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Oracle 数据库 {{ $labels.instance }} 的 {{ $labels.tablespace }} 表空间还剩 {{ $value }}%" 
+      description: "Oracle 数据库 {{ $labels.instance }} 的 {{ $labels.tablespace }} 表空间还剩 {{ $value }}%"
+  - alert: OracleTempTablespace
+    expr: 100 * oracledb_tablespace_free{tablespace=~"SZGD_.+",type="TEMPORARY"}/oracledb_tablespace_max_bytes{tablespace=~"SZGD_.+",type="TEMPORARY"} < 10
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Oracle 数据库 {{ $labels.instance }} 的 {{ $labels.tablespace }} 表空间还剩 {{ $value }}%" 
+      description: "Oracle 数据库 {{ $labels.instance }} 的 {{ $labels.tablespace }} 表空间还剩 {{ $value }}%"

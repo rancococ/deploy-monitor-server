@@ -5,16 +5,28 @@
 # compose支持的版本2
 version: "2"
 services:
-  # server
-  server:
-    image: ${IMAGE_CONSUL}
-    container_name: "server.${PRODUCT_NAME}.${COMPANY_NAME}"
-    hostname: "server.${PRODUCT_NAME}.${COMPANY_NAME}"
+  # prometheus
+  prometheus:
+    image: ${IMAGE_PROMETHEUS}
+    container_name: "prometheus.${PRODUCT_NAME}.${COMPANY_NAME}"
+    hostname: "prometheus.${PRODUCT_NAME}.${COMPANY_NAME}"
     restart: "always"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./volume/server/conf:/etc/consul/conf:ro
-      - ./volume/server/data:/tmp/consul/data:rw
-      - ./volume/server/logs:/tmp/consul/logs:rw
-    command: agent -bind="${HOST_IP}" -datacenter="${DATA_CENTER}" -node="${NODE_NAME}" -config-dir=/etc/consul/conf -data-dir=/tmp/consul/data -log-file=/tmp/consul/logs/consul.log -log-level=${LOG_LEVEL} -retry-join="${JOIN_ADDR1}" -retry-join="${JOIN_ADDR2}" -retry-join="${JOIN_ADDR3}"
+      - ./volume/prometheus/conf/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./volume/prometheus/conf/prometheus.rules.yml:/etc/prometheus/prometheus.rules.yml:ro
+      - ./volume/prometheus/data:/prometheus:rw
+      #- ./volume/prometheus/logs:/tmp:rw
+    network_mode: "host"
+  # grafana
+  grafana:
+    image: ${IMAGE_GRAFANA}
+    container_name: "grafana.${PRODUCT_NAME}.${COMPANY_NAME}"
+    hostname: "grafana.${PRODUCT_NAME}.${COMPANY_NAME}"
+    restart: "always"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./volume/grafana/conf/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./volume/grafana/data:/var/lib/grafana:rw
+      - ./volume/grafana/logs:/var/log/grafana:rw
     network_mode: "host"

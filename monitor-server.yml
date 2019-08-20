@@ -18,6 +18,8 @@ services:
       - ./volume/prometheus/data:/prometheus:rw
       #- ./volume/prometheus/logs:/tmp:rw
     network_mode: "host"
+    extra_hosts:
+      - "prometheus.${PRODUCT_NAME}.${COMPANY_NAME}:${HOST_IP}"
   # grafana
   grafana:
     image: ${IMAGE_GRAFANA}
@@ -30,3 +32,5 @@ services:
       - ./volume/grafana/data:/var/lib/grafana:rw
       - ./volume/grafana/logs:/var/log/grafana:rw
     network_mode: "host"
+    extra_hosts:
+      - "grafana.${PRODUCT_NAME}.${COMPANY_NAME}:${HOST_IP}"

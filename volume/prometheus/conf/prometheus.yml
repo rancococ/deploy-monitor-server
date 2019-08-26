@@ -27,28 +27,28 @@ scrape_configs:
 
   - job_name: 'linux'
     static_configs:
-    - targets: ['192.168.180.191:9100', '192.168.180.192:9100']
+    - targets: ['192.168.180.191:9100', '192.168.180.192:9100', '192.168.180.193:9100', '192.168.180.194:9100', '192.168.180.195:9100', '192.168.180.196:9100', '192.168.180.197:9100', '192.168.180.198:9100', '192.168.180.199:9100']
 
   - job_name: 'windows'
     static_configs:
-    - targets: ['localhost:9182', '192.168.180.206:9182']
-
-  - job_name: 'oracledb'
-    static_configs:
-    - targets: ['localhost:9161','192.168.180.206:9161']
-
-  - job_name: 'mysqldb'
-    static_configs:
-    - targets: ['192.168.180.179:9104','192.168.180.195:9104','192.168.8.220:9104']
-
-  - job_name: 'consul'
-    static_configs:
-    - targets: ['192.168.8.111:9107']
-
-  - job_name: 'haproxy'
-    static_configs:
-    - targets: ['192.168.8.233:9101']
+    - targets: ['192.168.180.188:9182', '192.168.180.189:9182', '192.168.180.206:9182']
 
   - job_name: 'jmx'
     static_configs:
-    - targets: ['192.168.3.160:8090']
+    - targets: ['192.168.180.198:9404', '192.168.180.199:9404', '192.168.180.100:9404']
+
+  - job_name: 'oracledb'
+    static_configs:
+    - targets: ['192.168.180.206:9161']
+
+  - job_name: 'mysqldb'
+    static_configs:
+    - targets: ['192.168.180.179:9104','192.168.180.195:9104']
+
+  - job_name: 'consul'
+    static_configs:
+    - targets: ['192.168.180.182:9107', '192.168.180.183:9107', '192.168.180.184:9107']
+
+  - job_name: 'haproxy'
+    static_configs:
+    - targets: ['192.168.180.191:9101', '192.168.180.192:9101']

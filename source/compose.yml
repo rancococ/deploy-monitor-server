@@ -7,10 +7,12 @@ version: "2"
 services:
   # prometheus
   prometheus:
-    image: ${IMAGE_PROMETHEUS}
+    image: "${IMAGE_PROMETHEUS}"
     container_name: "prometheus.${PRODUCT_NAME}.${COMPANY_NAME}"
     hostname: "prometheus.${PRODUCT_NAME}.${COMPANY_NAME}"
     restart: "always"
+    env_file:
+      - ./prometheus.env
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./volume/prometheus/conf/prometheus.yml:/etc/prometheus/prometheus.yml:ro
@@ -22,10 +24,12 @@ services:
       - "prometheus.${PRODUCT_NAME}.${COMPANY_NAME}:${HOST_IP}"
   # grafana
   grafana:
-    image: ${IMAGE_GRAFANA}
+    image: "${IMAGE_GRAFANA}"
     container_name: "grafana.${PRODUCT_NAME}.${COMPANY_NAME}"
     hostname: "grafana.${PRODUCT_NAME}.${COMPANY_NAME}"
     restart: "always"
+    env_file:
+      - ./grafana.env
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./volume/grafana/conf/grafana.ini:/etc/grafana/grafana.ini:ro

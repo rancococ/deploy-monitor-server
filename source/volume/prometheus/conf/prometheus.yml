@@ -25,30 +25,21 @@ scrape_configs:
     static_configs:
     - targets: ['localhost:9090']
 
-  - job_name: 'linux'
-    static_configs:
-    - targets: ['192.168.180.191:9100', '192.168.180.192:9100', '192.168.180.193:9100', '192.168.180.194:9100', '192.168.180.195:9100', '192.168.180.196:9100', '192.168.180.197:9100', '192.168.180.198:9100', '192.168.180.199:9100']
+  - job_name: 'node'
+    file_sd_configs:
+    - files: ['/etc/prometheus/targets/node/*.json']
+      refresh_interval: 10s
 
-  - job_name: 'windows'
-    static_configs:
-    - targets: ['192.168.180.188:9182', '192.168.180.189:9182', '192.168.180.206:9182']
+  - job_name: 'wmi'
+    file_sd_configs:
+    - files: ['/etc/prometheus/targets/wmi/*.json']
+      refresh_interval: 10s
 
-  - job_name: 'jmx'
-    static_configs:
-    - targets: ['192.168.180.198:9404', '192.168.180.199:9404', '192.168.180.100:9404']
-
-  - job_name: 'oracledb'
-    static_configs:
-    - targets: ['192.168.180.206:9161']
-
-  - job_name: 'mysqldb'
-    static_configs:
-    - targets: ['192.168.180.179:9104','192.168.180.195:9104']
-
-  - job_name: 'consul'
-    static_configs:
-    - targets: ['192.168.180.182:9107', '192.168.180.183:9107', '192.168.180.184:9107']
-
-  - job_name: 'haproxy'
-    static_configs:
-    - targets: ['192.168.180.191:9101', '192.168.180.192:9101']
+#remote_write:
+#  - url: "http://localhost:8086/api/v1/prom/write?db=prometheus"
+#remote_read:
+#  - url: "http://localhost:8086/api/v1/prom/read?db=prometheus"
+remote_write:
+  - url: "http://localhost:8086/api/v1/prom/write?db=prometheus&u=admin&p=Admin@123"
+remote_read:
+  - url: "http://localhost:8086/api/v1/prom/read?db=prometheus&u=admin&p=Admin@123"

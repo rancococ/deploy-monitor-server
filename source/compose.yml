@@ -16,6 +16,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./volume/prometheus/conf/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./volume/prometheus/conf/targets:/etc/prometheus/targets:ro
       - ./volume/prometheus/conf/prometheus.rules.yml:/etc/prometheus/prometheus.rules.yml:ro
       - ./volume/prometheus/data:/prometheus:rw
       #- ./volume/prometheus/logs:/tmp:rw

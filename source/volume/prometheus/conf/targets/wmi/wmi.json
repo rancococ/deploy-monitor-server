@@ -1,0 +1,11 @@
+[
+    {
+        "targets": [
+            "127.0.0.1:9182"
+        ],
+        "labels": {
+            "instance": "wmi_localhost",
+            "job": "wmi"
+        }
+    }
+]

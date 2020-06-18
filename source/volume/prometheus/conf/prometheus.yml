@@ -25,21 +25,18 @@ scrape_configs:
     static_configs:
     - targets: ['localhost:9090']
 
-  - job_name: 'node'
+  - job_name: 'linux'
     file_sd_configs:
-    - files: ['/etc/prometheus/targets/node/*.json']
+    - files: ['/etc/prometheus/targets/linux/*.json']
       refresh_interval: 10s
 
-  - job_name: 'wmi'
+  - job_name: 'windows'
     file_sd_configs:
-    - files: ['/etc/prometheus/targets/wmi/*.json']
+    - files: ['/etc/prometheus/targets/windows/*.json']
       refresh_interval: 10s
 
-#remote_write:
-#  - url: "http://localhost:8086/api/v1/prom/write?db=prometheus"
-#remote_read:
-#  - url: "http://localhost:8086/api/v1/prom/read?db=prometheus"
+# remote_write and remote_read
 remote_write:
-  - url: "http://localhost:8086/api/v1/prom/write?db=prometheus&u=admin&p=Admin@123"
+  - url: "http://localhost:8086/api/v1/prom/write?db=prometheus&u=prom&p=Prom@123"
 remote_read:
-  - url: "http://localhost:8086/api/v1/prom/read?db=prometheus&u=admin&p=Admin@123"
+  - url: "http://localhost:8086/api/v1/prom/read?db=prometheus&u=prom&p=Prom@123"

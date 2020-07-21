@@ -1,4 +1,4 @@
 
-Prometheus Alertmanager Grafana
+Prometheus Grafana
 
 admin/admin

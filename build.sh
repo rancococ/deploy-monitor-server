@@ -56,11 +56,10 @@ cd "${base_dir}"
 
 # envirionment
 product_name="monitor-server"
-product_version="v1.0.0"
+product_version="1.0.0.0"
 images=(
 registry.cdjdgm.com/prom/prometheus:v2.19.0
 registry.cdjdgm.com/prom/grafana:7.0.3
-registry.cdjdgm.com/prom/alertmanager:v0.20.0
 )
 temp_uuid="$(cat /proc/sys/kernel/random/uuid)"
 build_home="/tmp/build_${temp_uuid}"
@@ -159,8 +158,9 @@ fun_build() {
 
     chmod 744 "${build_home}/${product_name}"/*.sh
 
-    mkdir -p "${base_dir}/release"
-    tar -C "${build_home}" -czf "${base_dir}"/release/${product_name}-${product_version}.tgz "${product_name}"
+    #tar -C "${build_home}" -czf "${base_dir}"/${product_name}-${product_version}.tgz "${product_name}"
+    cd "${build_home}/${product_name}"
+    tar -czf "${base_dir}"/${product_name}-${product_version}.tgz .[!.]* *
 
     \rm -rf "${build_home}"
 
